@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+//import { useHistory } from "react-router-dom";
 
 import { axiosWithAuth } from "../helpers/axiosWithAuth";
 import EditMenu from "./EditMenu";
+import AddMenu from "./AddMenu";
 
 const initialColor = {
   color: "",
@@ -13,12 +14,15 @@ const ColorList = ({ colors, updateColors }) => {
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
+  const [adding, setAdding] = useState(false);
+  const [colorToAdd, setColorToAdd] = useState(initialColor);
+
   const editColor = color => {
     setEditing(true);
     setColorToEdit(color);
   };
 
-  const { push } = useHistory();
+  //const { push } = useHistory();
 
   const saveEdit = e => {
     e.preventDefault();
@@ -29,7 +33,7 @@ const ColorList = ({ colors, updateColors }) => {
          //console.log(response)
          updateColors([...colors, response.data])
          //console.log(response)
-         push('/bubbles');
+         //push('/bubbles');
        })
        .catch((error) => {
          console.log(error)
@@ -42,16 +46,28 @@ const ColorList = ({ colors, updateColors }) => {
         .then((response) => {
           //console.log(response)
           updateColors(colors.filter(color => color.id !== Number(response.data)));
-          push('/bubbles')
+          //push('/bubbles')
         })
         .catch((error) => {
           console.error(error);
         })
   };
 
+  const addColor = (event) => {
+    axiosWithAuth()
+        .post('/colors', colorToAdd)
+        .then((response) => {
+          updateColors(response.data)
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+  }
+
   return (
     <div className="colors-wrap">
       <p>colors</p>
+      <button>Add a New Color</button>
       <ul>
         {colors.map(color => (
           <li key={color.color} onClick={() => editColor(color)}>

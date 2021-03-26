@@ -12,14 +12,14 @@ const colorsData = [
     code: {
       hex: "#99ddbc",
     },
-    id: 2,
+    id: 1,
   },
   {
     color: "aqua",
     code: {
       hex: "#00ffff",
     },
-    id: 3,
+    id: 2,
   },
 ]
 
@@ -34,8 +34,8 @@ test("Fetches data and renders the bubbles on mounting", async () => {
   mockFetchColors.mockResolvedValueOnce(colorsData);
   render (<BubblePage />);
 
-  const colorBubbles = screen.findByText(/bubbles/i);
-  expect(await colorBubbles).toBeInTheDocument();
+  const apiData = await screen.findByTestId('apiData');
+  expect(apiData).toHaveLength(2);
 });
 
 //Task List
