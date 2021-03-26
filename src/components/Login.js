@@ -5,12 +5,14 @@ import { axiosWithAuth } from "../helpers/axiosWithAuth";
 const initialState = {
   username: '',
   password: '',
-  error:''
 }
+
+const initialError = '';
 const Login = () => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
   const [login, setLogin] = useState(initialState)
+  const [error, setError] = useState(initialError)
   const { push } = useHistory()
 
   const handleChange = (event) => {
@@ -23,6 +25,8 @@ const Login = () => {
     event.preventDefault();
     //console.log("login");
 
+    (login.username === '' || login.password === '')? setError('Username or Password is not correct'): setError('');
+
     axiosWithAuth()
         .post('/login', login)
         .then((response) => {
@@ -32,7 +36,8 @@ const Login = () => {
           push('/bubbles')
         })
         .catch((error) => {
-          console.log("Error:", error);
+          setError('Username or Password is not corrected');
+          setLogin(initialState);
         })
   }
 
@@ -60,7 +65,7 @@ const Login = () => {
           onChange={handleChange}
         /> 
 
-        <p>{login.error}</p>
+        {error && <p style={{color: "red"}}>{error}</p>}
         <button>Login</button>
       </form>
     </>
