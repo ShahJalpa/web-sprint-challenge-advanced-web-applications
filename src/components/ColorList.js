@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { useHistory } from "react-router-dom";
 
+import { axiosWithAuth } from "../helpers/axiosWithAuth";
 import EditMenu from "./EditMenu";
 
 const initialColor = {
@@ -17,8 +18,12 @@ const ColorList = ({ colors, updateColors }) => {
     setColorToEdit(color);
   };
 
+  const { push } = useHistory();
+
   const saveEdit = e => {
     e.preventDefault();
+
+    
 
   };
 
