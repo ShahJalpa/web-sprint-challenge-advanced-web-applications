@@ -11,11 +11,28 @@ const Login = () => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
   const [login, setLogin] = useState(initialState)
+  const { push } = useHistory()
 
   const handleChange = (event) => {
     const value = event.target.value;
     setLogin({...login, [event.target.name]: value})
-    console.log(value);
+    //console.log(value);
+  }
+
+  const handleLoginButton = (event) => {
+    event.preventDefault();
+    //console.log("login");
+
+    axiosWithAuth()
+        .post('/login', login)
+        .then((response) => {
+          //console.log(response)
+          localStorage.setItem("token", response.data.payload)
+          push('/bubblepage')
+        })
+        .catch((error) => {
+          console.log("Error:", error);
+        })
   }
 
   return (
@@ -23,7 +40,7 @@ const Login = () => {
       <h1>
         Welcome to the Bubble App!
       </h1>
-      <form>
+      <form onSubmit={handleLoginButton}>
         <label>Username: </label>
         <input 
           type="text"
@@ -40,7 +57,10 @@ const Login = () => {
           placeholder="password"
           value={login.password}
           onChange={handleChange}
-        />
+        /> 
+
+        <p>{login.error}</p>
+        <button>Login</button>
       </form>
     </>
   );
