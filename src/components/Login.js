@@ -11,6 +11,7 @@ const initialError = '';
 const Login = () => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
+  //I decided not to use useEffect, as we do not need it here.
   const [login, setLogin] = useState(initialState)
   const [error, setError] = useState(initialError)
   const { push } = useHistory()
