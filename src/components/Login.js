@@ -28,7 +28,8 @@ const Login = () => {
         .then((response) => {
           //console.log(response)
           localStorage.setItem("token", response.data.payload)
-          push('/bubblepage')
+          //push('/bubblepage')
+          push('/bubbles')
         })
         .catch((error) => {
           console.log("Error:", error);
