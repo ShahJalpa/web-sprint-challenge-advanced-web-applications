@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { axiosWithAuth } from "../helpers/axiosWithAuth";
 
 const initialState = {
   username: '',
@@ -13,15 +14,10 @@ const Login = () => {
 
   const handleChange = (event) => {
     const value = event.target.value;
-
     setLogin({...login, [event.target.name]: value})
     console.log(value);
   }
 
-  useEffect(()=>{
-    // make a post request to retrieve a token from the api
-    // when you have handled the token, navigate to the BubblePage route
-  });
   return (
     <>
       <h1>
