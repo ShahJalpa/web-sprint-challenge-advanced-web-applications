@@ -23,8 +23,17 @@ const ColorList = ({ colors, updateColors }) => {
   const saveEdit = e => {
     e.preventDefault();
 
-    
-
+    axiosWithAuth()
+       .put(`/colors/${colorToEdit}`, colorToEdit)
+       .then((response) => {
+         //console.log(response)
+         updateColors([...colors, response.data])
+         //console.log(response)
+         push('/bubbles');
+       })
+       .catch((error) => {
+         console.log(error)
+       })
   };
 
   const deleteColor = color => {
