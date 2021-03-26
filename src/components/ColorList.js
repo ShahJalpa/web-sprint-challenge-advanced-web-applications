@@ -37,6 +37,16 @@ const ColorList = ({ colors, updateColors }) => {
   };
 
   const deleteColor = color => {
+    axiosWithAuth()
+        .delete(`/colors/${color.id}`)
+        .then((response) => {
+          //console.log(response)
+          updateColors(colors.filter(color => color.id !== Number(response.data)));
+          push('/bubbles')
+        })
+        .catch((error) => {
+          console.error(error);
+        })
   };
 
   return (
